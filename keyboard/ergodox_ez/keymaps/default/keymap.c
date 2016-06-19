@@ -1,4 +1,4 @@
-// modified following file. 
+// modified following file.
 // https://github.com/msc654/qmk_firmware/blob/master/keyboard%2Fergodox_ez%2Fkeymaps%2Fdefault%2Fkeymap.c
 
 #include "ergodox_ez.h"
@@ -46,7 +46,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                 KC_SPC,KC_BSPC, KC_END,
         // right hand
         KC_PSCR,            KC_6,   KC_7,   KC_8,   KC_9,   KC_0,             KC_BSPC,
-        TG(BASE2),          KC_Y,   KC_U,   KC_I,   KC_O,   KC_P,             KC_ENT,
+        TG(BASE1),          KC_Y,   KC_U,   KC_I,   KC_O,   KC_P,             KC_ENT,
                             KC_H,   KC_J,   KC_K,   KC_L,   KC_SCLN,          KC_ENT,
         TG(MOUSE),          KC_N,   KC_M,   KC_COMM,KC_DOT, KC_UP,            KC_RSFT,
                                  KC_HENK,   KC_BTN1,KC_LEFT,KC_DOWN,          KC_RGHT,
