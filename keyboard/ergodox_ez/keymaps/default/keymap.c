@@ -1,4 +1,4 @@
-// modified following file.
+// modified following file. 
 // https://github.com/msc654/qmk_firmware/blob/master/keyboard%2Fergodox_ez%2Fkeymaps%2Fdefault%2Fkeymap.c
 
 #include "ergodox_ez.h"
@@ -28,7 +28,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                        | LGui | LAlt |       | Alt  | LFn  |
  *                                 ,------|------|------|       |------+--------+------.
  *                                 |      |      | Home |       | PgUp |        |      |
- *                                 |Space |Back  |------|       |------| Space  |Enter |
+ *                                 |Space |Back  |------|       |------| Back   |Enter |
  *                                 |      |      | End  |       | PgDn |        |      |
  *                                 `--------------------'       `----------------------'
  */
@@ -52,7 +52,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                  KC_HENK,   KC_BTN1,KC_LEFT,KC_DOWN,          KC_RGHT,
              KC_LALT,        MO(FN),
              KC_PGUP,
-             KC_PGDN,KC_SPC, KC_ENT
+             KC_PGDN,KC_BSPC,KC_ENT
     ),
 
 /* Keymap 1: Windows layer (JIS layout) 2
