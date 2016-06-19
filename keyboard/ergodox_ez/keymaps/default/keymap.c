@@ -5,56 +5,100 @@
 #include "debug.h"
 #include "action_layer.h"
 
-#define BASE    0  // default layer
-#define FN      1  // functions
-#define MOUSE   2  // mouse mode
+#define BASE1   0  // Windows layer (JIS layout) 1
+#define BASE2   1  // Windows layer (JIS layout) 2
+#define FN      2  // functions
+#define MOUSE   3  // mouse mode
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-/* Keymap 0: Windows layer (JIS layout)
+/* Keymap 0: Windows layer (JIS layout) 1
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * | ESC    |   1  |   2  |   3  |   4  |   5  | カナ |           | PSCR |   6  |   7  |   8  |   9  |   0  |   -    |
+ * | ESC    |   1  |   2  |   3  |   4  |   5  | カナ |           | PSCR |   6  |   7  |   8  |   9  |   0  | Back   |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * | Tab    |   Q  |   W  |   E  |   R  |   T  | LFn  |           | LFn  |   Y  |   U  |   I  |   O  |   P  |   @`   |
- * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * | CTRL   |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |  ;+  |   :*   |
- * |--------+------+------+------+------+------|TOGGLE|           |CTLALT|------+------+------+------+------+--------|
- * | LShift |   Z  |   X  |   C  |   V  |   B  |MOUSE |           | DEL  |   N  |   M  |  ,<  |  .>  |   /  |   [{   |
+ * | Tab    |   Q  |   W  |   E  |   R  |   T  | TG   |           | TG   |   Y  |   U  |   I  |   O  |   P  | Enter  |
+ * |--------+------+------+------+------+------| B1   |           | B2   |------+------+------+------+------+--------|
+ * | LShift |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |  ;+  | Enter  |
+ * |--------+------+------+------+------+------| TG   |           | TG   |------+------+------+------+------+--------|
+ * | CTRL   |   Z  |   X  |   C  |   V  |   B  | FN   |           | MOUSE|   N  |   M  |  ,<  |  .>  |  Up  | Shift  |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |  cut | paste| copy | Left | Right|                                       |  Up  | Down |  [{  |  }]  |   \  |
- *   `----------------------------------'                                       `----------------------------------'
+ *   | CTRL | LGui | LAlt | MHEN | Space|                                       | HENK |RClick| Left | Down | Right |
+ *   `----------------------------------'                                       `-----------------------------------'
  *                                        ,-------------.       ,-------------.
  *                                        | LGui | LAlt |       | Alt  | LFn  |
  *                                 ,------|------|------|       |------+--------+------.
- *                                 |Back  |      | Home |       | PgUp |        |      |
- *                                 |space |カナ  |------|       |------| Enter  |Space |
+ *                                 |      |      | Home |       | PgUp |        |      |
+ *                                 |Space |Back  |------|       |------| Enter  |Space |
  *                                 |      |      | End  |       | PgDn |        |      |
  *                                 `--------------------'       `----------------------'
  */
 // If it accepts an argument (i.e, is a function), it doesn't need KC_.
 // Otherwise, it needs KC_*
-[BASE] = KEYMAP(  // layer 0 : default
+[BASE1] = KEYMAP(  // layer 0 : default
         // left hand
         KC_ESC,         KC_1,         KC_2,   KC_3,   KC_4,   KC_5,   KC_GRV,
-        KC_TAB,         KC_Q,         KC_W,   KC_E,   KC_R,   KC_T,   MO(FN),
-        KC_LCTL,        KC_A,         KC_S,   KC_D,   KC_F,   KC_G,
-        KC_LSFT,        KC_Z,         KC_X,   KC_C,   KC_V,   KC_B,   TG(MOUSE),
-        LCTL(KC_X),     LCTL(KC_V),   LCTL(KC_C),   KC_LEFT,  KC_RGHT,
+        KC_TAB,         KC_Q,         KC_W,   KC_E,   KC_R,   KC_T,   TG(BASE1),
+        KC_LSFT,        KC_A,         KC_S,   KC_D,   KC_F,   KC_G,
+        KC_LCTL,        KC_Z,         KC_X,   KC_C,   KC_V,   KC_B,   TG(FN),
+        KC_LCTL,     KC_LGUI,      KC_LALT,KC_MHEN,KC_SPC,
                                                 KC_LGUI,        KC_LALT,
                                                                 KC_HOME,
-                                                KC_BSPC,KC_GRV, KC_END,
+                                                KC_SPC,KC_BSPC, KC_END,
         // right hand
-        KC_PSCR,            KC_6,   KC_7,   KC_8,   KC_9,   KC_0,             KC_MINS,
-        MO(FN),             KC_Y,   KC_U,   KC_I,   KC_O,   KC_P,             KC_LBRC,
-                            KC_H,   KC_J,   KC_K,   KC_L,   KC_SCLN,          KC_QUOT,
-        LALT(LCTL(KC_DEL)) ,KC_N,   KC_M,   KC_COMM,KC_DOT, KC_SLSH,          KC_RBRC,
-                                   KC_UP,   KC_DOWN,KC_RBRC,KC_BSLS,          KC_RO,
+        KC_PSCR,            KC_6,   KC_7,   KC_8,   KC_9,   KC_0,             KC_BSPC,
+        TG(B2),             KC_Y,   KC_U,   KC_I,   KC_O,   KC_P,             KC_ENT,
+                            KC_H,   KC_J,   KC_K,   KC_L,   KC_SCLN,          KC_ENT,
+        TG(MOUSE),          KC_N,   KC_M,   KC_COMM,KC_DOT, KC_UP,            KC_RSFT,
+                                 KC_HENK,   KC_BTN1,KC_LEFT,KC_DOWN,          KC_RGHT,
              KC_LALT,        MO(FN),
              KC_PGUP,
              KC_PGDN,KC_ENT, KC_SPC
     ),
 
-/* Keymap 1: Function Layer
+/* Keymap 1: Windows layer (JIS layout) 2
+ *
+ * ,--------------------------------------------------.           ,--------------------------------------------------.
+ * |        |      |      |      |      |      |      |           |      |      |      |   -  |  ^   |  \|  | Back   |
+ * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |      |           |      |      |      |      |  @`  |  [{  | Enter  |
+ * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |------|           |------|      |      |  ;+  |  :*  |  ]}  | Enter  |
+ * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |      |           |      |      |      |      |  /?  |  _   | Shift  |
+ * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
+ *   |      |      |      |      |      |                                       |      |      |      |      |      |
+ *   `----------------------------------'                                       `----------------------------------'
+ *                                        ,-------------.       ,-------------.
+ *                                        |      |      |       |      |      |
+ *                                 ,------|------|------|       |------+------+------.
+ *                                 |      |      |      |       |      |      |      |
+ *                                 |      |      |------|       |------|      |      |
+ *                                 |      |      |      |       |      |      |      |
+ *                                 `--------------------'       `--------------------'
+ */
+// Fnctions
+[BASE2] = KEYMAP(
+       // left hand
+       KC_TRNS,     KC_TRNS,    KC_TRNS, KC_TRNS, KC_TRNS, KC_CIRC, KC_TRNS,
+       KC_TRNS,     KC_TRNS,    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_TRNS,     KC_TRNS,    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_TRNS,     KC_TRNS,    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_TRNS,     KC_TRNS,    KC_TRNS, KC_TRNS, KC_TRNS,
+                                                            KC_TRNS, KC_TRNS,
+                                                                     KC_TRNS,
+                                                   KC_TRNS, KC_TRNS, KC_TRNS,
+       // right hand
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_MINS, KC_TRNS,  KC_JYEN, KC_TRNS,
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_LBRC,  KC_RBRC, KC_TRNS,
+                KC_TRNS, KC_TRNS, KC_SCLN, KC_QUOT,  KC_BSLS, KC_TRNS,
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_SLSH,  KC_UNDS, KC_TRNS,
+                KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS,
+       KC_TRNS, KC_TRNS,
+       KC_TRNS,
+       KC_TRNS, KC_TRNS, KC_TRNS
+    ),
+
+/* Keymap 2: Function Layer
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * |        |  F1  |  F2  |  F3  |  F4  |  F5  | F6   |           | F7   |  F8  |  F9  | F10  |  F11 |  F12 |        |
@@ -96,8 +140,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        KC_TRNS,
        KC_TRNS, KC_VOLD, KC_VOLU
     ),
-    
-/* Keymap 2: Mouse Layer
+
+/* Keymap 3: Mouse Layer
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * |        |  F1  |  F2  |  F3  |  F4  |  F5  | F6   |           | F7   |  F8  |  F9  | F10  |  F11 |  F12 |        |
@@ -170,7 +214,7 @@ void matrix_init_user(void) {
     ergodox_right_led_1_on();
     ergodox_right_led_2_on();
     ergodox_right_led_3_on();
-    ergodox_board_led_off();    
+    ergodox_board_led_off();
 };
 
 // Runs constantly in the background, in a loop.
@@ -184,8 +228,10 @@ void matrix_scan_user(void) {
     ergodox_right_led_3_off();
     switch (layer) {
       // TODO: Make this relevant to the ErgoDox EZ.
-        case BASE:
-            //ergodox_right_led_1_on();
+        case BASE1:
+            break;
+        case BASE2:
+            ergodox_right_led_1_on();
             break;
         case FN:
             ergodox_right_led_2_on();
@@ -198,3 +244,4 @@ void matrix_scan_user(void) {
             break;
     }
 };
+
